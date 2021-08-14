@@ -5,12 +5,13 @@
         <input type="text" placeholder="Enter an amount..." v-model="amounted"/>
         <button>Enter Amount</button>
     </form>
-    <BudgetList v-bind:amounts="this.amounts"/>
+    <BudgetList v-on:deleted="deleteBtn($event)" v-bind:amounts="this.amounts"/>
 </div>
 </template>
 
 <script>
     import BudgetList from './BudgetList.vue';
+    import {v4 as uuid} from 'uuid';
 
 
     export default {
@@ -27,11 +28,22 @@
         },
         methods: {
             getAmounts() {
-                if(this.amounted === "") {
+                if(this.amounted === "" || this.amounted.includes(',')) {
                     return
                 }
-                this.amounts = [...this.amounts, this.amounted];
+
+                let budgetAmount = {
+                    amount: this.amounted,
+                    id: uuid()
+                }
+
+
+                this.amounts = [...this.amounts, budgetAmount];
                 this.amounted = ""
+            },
+
+             deleteBtn(id) {
+                this.amounts = this.amounts.filter(amount => amount.id !== id)
             }
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!submitted" class="container">
+    <div v-if="!submitted || amount === ''" class="container">
       <form @submit.prevent="storeInitialAmount">
         <input type="text" placeholder="Enter in starting amount...." v-model="amount"/>
         <button>Submit Amount</button>
@@ -27,7 +27,9 @@ export default {
   methods: {
     storeInitialAmount() {
       let store = window.localStorage;
-
+      if(this.amount === '') {
+        return
+      }
       store.setItem('amount', this.amount)
       this.submitted = true
     }
