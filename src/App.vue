@@ -26,6 +26,9 @@ export default {
   },
   methods: {
     storeInitialAmount() {
+      let store = window.localStorage;
+
+      store.setItem('amount', this.amount)
       this.submitted = true
     }
   }

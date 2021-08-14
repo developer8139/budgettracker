@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
     <h1>BudgetAmounts</h1>
     <form @submit.prevent="getAmounts">
         <input type="text" placeholder="Enter an amount..." v-model="amounted"/>
@@ -27,6 +27,9 @@
         },
         methods: {
             getAmounts() {
+                if(this.amounted === "") {
+                    return
+                }
                 this.amounts = [...this.amounts, this.amounted];
                 this.amounted = ""
             }
@@ -36,5 +39,11 @@
 </script>
 
 <style scoped>
-
+    .container {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid lightcyan;
+        border-radius: 10px;
+        padding: 20px;
+    }
 </style>
